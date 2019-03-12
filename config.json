@@ -5,7 +5,25 @@
     },
     "response": {
       "status": 200,
-      "body": "success"
+      "body": "Success"
+    }
+  },
+  {
+    "match": {
+      "url": "/forbidden"
+    },
+    "response": {
+      "status": 403,
+      "body": "Forbidden"
+    }
+  },
+  {
+    "match": {
+      "url": "/unauthorized"
+    },
+    "response": {
+      "status": 401,
+      "body": "Unauthorized"
     }
   }
 ]
