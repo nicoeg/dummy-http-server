@@ -1,13 +1,20 @@
 # Dummy HTTP Server
 
-A Simple HTTP server which will respond with what you tell it to through a json file.  
-It will stop on the first match in the config json file.
+A Simple HTTP server which will respond with what you tell it to through a JSON file.  
+It will stop on the first match in the config JSON file.
 
 Project is forked from [jasonrm/dummy-server](https://github.com/jasonrm/dummy-server).
 
 ## Usage
 
-`docker run -i -t -p 8080:8080 nicoeg/dummy-http-server`
+```sh
+$ docker run -it -p 8080:8080 nicoeg/dummy-http-server
+``` 
+
+> Note: the custom config file needs to be mounted into the docker container for the HTTP server to use it.  
+```sh
+$ docker run -v $PWD/config.json:/app/config.json -it -p 8080:8080 nicoeg/dummy-http-server
+``` 
 
 ### Options
 
@@ -21,8 +28,8 @@ Usage of ./dummy-http-server:
 
 ## Request configuration
 
-Use the config to match different requests. Configuration is loaded on each request right now to allow for easy testing.
-When match keys are not present they will be ignored
+Use the config to match different requests. Configuration is loaded on each request right now to allow for easy testing.  
+When match keys are not present they will be ignored.
 
 Example configuration
 ```JSON
@@ -39,8 +46,7 @@ Example configuration
   },
   {
     "match": {
-      "url": "/data",
-      // Will match any method
+      "url": "/match-any-method",
     },
     "response": {
       "status": 403,
@@ -53,7 +59,7 @@ Example configuration
 ## TODO:
 
 - Point output of response to file
-- Match on body, query and headers
+- Match on body, query, and headers
 - Wildcards when matching
 - Tests ofc...
 - Listen for config file changes instead of loading on each request

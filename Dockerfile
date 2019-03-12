@@ -9,7 +9,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflag
 FROM scratch
 
 COPY --from=builder /build/dummy-http-server /app/
+COPY config.json /app/config.json
 
 EXPOSE 8080
+
+WORKDIR /app
 
 ENTRYPOINT ["/app/dummy-http-server"]
