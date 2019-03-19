@@ -69,9 +69,6 @@ func matchRoute(match Match, request *http.Request) bool {
 }
 
 func matchURL(matchURL string, requestURL string) bool {
-	if matchURL != "/yo/:halla/yo?" {
-		return false
-	}
 	matchParts := strings.Split(matchURL, "/")
 	requestParts := strings.Split(strings.TrimRight(requestURL, "/"), "/")
 	for index, part := range matchParts {
