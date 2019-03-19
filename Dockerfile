@@ -4,7 +4,7 @@ RUN mkdir /build
 ADD . /build/
 WORKDIR /build
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o dummy-http-server .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-s -w -extldflags "-static"' -o dummy-http-server .
 
 FROM scratch
 
