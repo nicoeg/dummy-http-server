@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -56,12 +57,43 @@ func handleRequest(response http.ResponseWriter, request *http.Request) {
 }
 
 func matchRoute(match Match, request *http.Request) bool {
-	if match.URL != "" && match.URL != request.URL.Path {
+	if !matchURL(match.URL, request.URL.Path) {
 		return false
 	}
 
 	if match.Method != "" && match.Method != request.Method {
 		return false
+	}
+
+	return true
+}
+
+func matchURL(matchURL string, requestURL string) bool {
+	if matchURL != "/yo/:halla/yo?" {
+		return false
+	}
+	matchParts := strings.Split(matchURL, "/")
+	requestParts := strings.Split(strings.TrimRight(requestURL, "/"), "/")
+	for index, part := range matchParts {
+		if strings.HasSuffix(part, "?") && index == len(requestParts) {
+			continue
+		}
+
+		if index == len(matchParts)-1 && len(matchParts) != len(requestParts) {
+			return false
+		}
+
+		if index >= len(requestParts) {
+			return false
+		}
+
+		if strings.HasPrefix(part, ":") {
+			continue
+		}
+
+		if strings.Replace(part, "?", "", -1) != requestParts[index] {
+			return false
+		}
 	}
 
 	return true
