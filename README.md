@@ -1,7 +1,7 @@
 # Dummy HTTP Server
 
 A Simple HTTP server which will respond with what you tell it to through a JSON file.  
-It will stop on the first match in the config JSON file.
+It will respond with the first match in the config JSON file.
 
 Project is forked from [jasonrm/dummy-server](https://github.com/jasonrm/dummy-server).
 
@@ -60,6 +60,4 @@ Example configuration
 
 - Point output of response to file
 - Match on body, query, and headers
-- Wildcards when matching
-- Tests ofc...
 - Listen for config file changes instead of loading on each request
