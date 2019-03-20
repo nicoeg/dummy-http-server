@@ -2,26 +2,26 @@ package main
 
 import (
 	"net/http"
-	"net/url"
+	"net/http/httptest"
 	"testing"
 )
 
 func TestMatchRoute(t *testing.T) {
 	truthy := map[Match]*http.Request{
-		Match{"/", "GET"}:               &http.Request{Method: "GET", URL: &url.URL{Path: "/"}},
-		Match{"/single", "GET"}:         &http.Request{Method: "GET", URL: &url.URL{Path: "/single"}},
-		Match{"/single", "POST"}:        &http.Request{Method: "POST", URL: &url.URL{Path: "/single"}},
-		Match{"/first/second", "GET"}:   &http.Request{Method: "GET", URL: &url.URL{Path: "/first/second"}},
-		Match{"/first/:second", "GET"}:  &http.Request{Method: "GET", URL: &url.URL{Path: "/first/nope"}},
-		Match{"/first/second?", "GET"}:  &http.Request{Method: "GET", URL: &url.URL{Path: "/first"}},
-		Match{"/first/secondu?", "GET"}: &http.Request{Method: "GET", URL: &url.URL{Path: "/first/secondu"}},
-		Match{"/first/:any?", "GET"}:    &http.Request{Method: "GET", URL: &url.URL{Path: "/first/nope"}},
+		Match{"/", "GET"}:               httptest.NewRequest("GET", "/", nil),
+		Match{"/single", "GET"}:         httptest.NewRequest("GET", "/single", nil),
+		Match{"/single", "POST"}:        httptest.NewRequest("POST", "/single", nil),
+		Match{"/first/second", "GET"}:   httptest.NewRequest("GET", "/first/second", nil),
+		Match{"/first/:second", "GET"}:  httptest.NewRequest("GET", "/first/nope", nil),
+		Match{"/first/second?", "GET"}:  httptest.NewRequest("GET", "/first", nil),
+		Match{"/first/secondu?", "GET"}: httptest.NewRequest("GET", "/first/secondu", nil),
+		Match{"/first/:any?", "GET"}:    httptest.NewRequest("GET", "/first/nope", nil),
 	}
 	falsy := map[Match]*http.Request{
-		Match{"/single", "GET"}:        &http.Request{Method: "GET", URL: &url.URL{Path: "/relationship"}},
-		Match{"/single", "GET"}:        &http.Request{Method: "POST", URL: &url.URL{Path: "/relationship"}},
-		Match{"/single", "POST"}:       &http.Request{Method: "GET", URL: &url.URL{Path: "/relationship"}},
-		Match{"/first/second?", "GET"}: &http.Request{Method: "GET", URL: &url.URL{Path: "/first/nope"}},
+		Match{"/single", "GET"}:        httptest.NewRequest("GET", "/relationship", nil),
+		Match{"/single", "GET"}:        httptest.NewRequest("POST", "/relationship", nil),
+		Match{"/single", "POST"}:       httptest.NewRequest("GET", "/relationship", nil),
+		Match{"/first/second?", "GET"}: httptest.NewRequest("GET", "/first/nope", nil),
 	}
 
 	for match, request := range truthy {
