@@ -52,6 +52,24 @@ Example configuration
       "status": 403,
       "body": "Forbidden"
     }
+  },
+  {
+    "match": {
+      "url": "/:can-be-any-route-segment/other",
+    },
+    "response": {
+      "status": 200,
+      "body": "Cool"
+    }
+  },
+  {
+    "match": {
+      "url": "/test/last-can-be-optional?",
+    },
+    "response": {
+      "status": 200,
+      "body": "Sick"
+    }
   }
 ]
 ```
