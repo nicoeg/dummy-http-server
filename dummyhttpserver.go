@@ -29,7 +29,7 @@ type Response struct {
 var configFile string
 
 func main() {
-	configFileParam := flag.String("config", "config.json", "Configuration file")
+	configFileParam := flag.String("config", "./config.json", "Configuration file")
 	portPtr := flag.Int("port", 8080, "port number")
 	flag.Parse()
 	configFile = *configFileParam
@@ -69,7 +69,7 @@ func matchRoute(match Match, request *http.Request) bool {
 }
 
 func matchURL(matchURL string, requestURL string) bool {
-	matchParts := strings.Split(matchURL, "/")
+	matchParts := strings.Split(strings.TrimRight(matchURL, "/"), "/")
 	requestParts := strings.Split(strings.TrimRight(requestURL, "/"), "/")
 	for index, part := range matchParts {
 		if strings.HasSuffix(part, "?") && index == len(requestParts) {

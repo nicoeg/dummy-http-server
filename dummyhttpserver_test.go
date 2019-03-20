@@ -8,6 +8,7 @@ import (
 
 func TestMatchRoute(t *testing.T) {
 	truthy := map[Match]*http.Request{
+		Match{"/", "GET"}:               &http.Request{Method: "GET", URL: &url.URL{Path: "/"}},
 		Match{"/single", "GET"}:         &http.Request{Method: "GET", URL: &url.URL{Path: "/single"}},
 		Match{"/single", "POST"}:        &http.Request{Method: "POST", URL: &url.URL{Path: "/single"}},
 		Match{"/first/second", "GET"}:   &http.Request{Method: "GET", URL: &url.URL{Path: "/first/second"}},
