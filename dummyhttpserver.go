@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 )
@@ -18,7 +19,7 @@ func main() {
 
 	listenStr := fmt.Sprintf(":%d", *portPtr)
 
-	fmt.Println(time.Now().Format(time.RFC3339), "Listening On", listenStr)
+	log.Println(time.Now().Format(time.RFC3339), "Listening On", listenStr)
 	http.HandleFunc("/", router.HandleRequest)
 	http.ListenAndServe(listenStr, nil)
 }

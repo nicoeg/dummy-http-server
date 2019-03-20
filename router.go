@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -44,14 +45,14 @@ func (router Router) HandleRequest(response http.ResponseWriter, request *http.R
 		if router._MatchRoute(element.Match, request) {
 			response.WriteHeader(element.Response.Status)
 			fmt.Fprint(response, element.Response.Body)
-			fmt.Println(element.Response.Body, request.Method, element.Response.Status, request.URL, request.UserAgent())
+			log.Println(element.Response.Body, request.Method, element.Response.Status, request.URL, request.UserAgent())
 			return
 		}
 	}
 
 	response.WriteHeader(404)
 	fmt.Fprint(response, "No request matching")
-	fmt.Println(time.Now().Format(time.RFC3339), request.Method, 404, request.URL, request.UserAgent())
+	log.Println(time.Now().Format(time.RFC3339), request.Method, 404, request.URL, request.UserAgent())
 }
 
 func (router Router) _ReadConfigFile() []Request {
