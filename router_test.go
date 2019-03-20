@@ -24,15 +24,15 @@ func TestMatchRoute(t *testing.T) {
 		Match{"/first/second?", "GET"}: httptest.NewRequest("GET", "/first/nope", nil),
 	}
 
+	router := Router{""}
 	for match, request := range truthy {
-
-		if !matchRoute(match, request) {
+		if !router._MatchRoute(match, request) {
 			t.Errorf("Expected %s to match %s", match.URL, request.URL.Path)
 		}
 	}
 
 	for match, request := range falsy {
-		if matchRoute(match, request) {
+		if router._MatchRoute(match, request) {
 			t.Errorf("Expected %s to not be matching %s", match.URL, request.URL.Path)
 		}
 	}
